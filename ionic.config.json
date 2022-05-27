@@ -1,7 +1,5 @@
 {
   "name": "Ionic-Angular-1935865",
-  "integrations": {
-    "capacitor": {}
-  },
+  "integrations": {},
   "type": "angular"
 }
