@@ -1,11 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Alumnos
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-router-outlet></ion-router-outlet>
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -14,9 +13,24 @@
   </ion-header>
 
   <ion-list>
-    <ion-item  *ngFor="let alumno of alumnos" [routerLink]="['/alumno-detalle', alumno.matricula]">
-      <ion-img src ="assets/imagenes/fcfm.png"></ion-img>
-      <ion-label><strong>{{alumno.nombre}}</strong> </ion-label>
+    <ion-item-sliding *ngFor="let alumno of alumnos">
+      <ion-item-options side="start">
+        <ion-item-option color="success" (click)="favorite(item)">
+          <ion-icon name="heart"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+    <ion-item [routerLink]="['/alumno-detalle',alumno.matricula]">
+      <ion-img src="{{alumno.image}}" width ="20px"></ion-img>
+      <ion-label>{{alumno.nombre}}</ion-label>
     </ion-item>
-  </ion-list> 
+
+    <ion-item-options side="end">
+      <ion-item-option color="danger" (click)="share(item)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+
+  </ion-list>
 </ion-content>
