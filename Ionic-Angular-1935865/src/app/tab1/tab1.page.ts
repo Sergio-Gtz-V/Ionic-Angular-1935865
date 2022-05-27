@@ -17,87 +17,87 @@ export class Tab1Page implements OnChanges{
     {
       "nombre": "Abraham",
       "apellido": "Ramirez",
-      "matricula": "ABC123"
+      "matricula": "AR12121"
     },
     {
       "nombre": "Aylin",
       "apellido": "Demecti",
-      "matricula": "ABC123"
+      "matricula": "AD78321"
     },
     {
       "nombre": "Brian",
       "apellido": "Esquivel",
-      "matricula": "ABC123"
+      "matricula": "BE12345"
     },
     {
       "nombre": "Diego",
       "apellido": "Davila",
-      "matricula": "ABC123"
+      "matricula": "DD14563"
     },
     {
       "nombre": "Diego",
       "apellido": "Jasso",
-      "matricula": "ABC123"
+      "matricula": "DJ098761"
     },
     {
       "nombre": "Julio",
       "apellido": "Luevano",
-      "matricula": "ABC123"
+      "matricula": "JL12894"
     },
     {
       "nombre": "Luis Armando",
       "apellido": "Villanueva",
-      "matricula": "ABC123"
+      "matricula": "LV78594"
     },
     {
       "nombre": "Luis Otoniel",
       "apellido": "Tamez",
-      "matricula": "ABC123"
+      "matricula": "LT45802"
     },
     {
       "nombre": "Rogel Axel",
       "apellido": "Guel",
-      "matricula": "ABC123"
+      "matricula": "RG30211"
     },
     {
       "nombre": "Sergio",
       "apellido": "Gutierrez",
-      "matricula": "ABC123"
+      "matricula": "SG69420"
     },
     {
       "nombre": "Omar",
       "apellido": "Garza",
-      "matricula": "ABC123"
+      "matricula": "0G34598"
     },
     {
       "nombre": "Bryan",
       "apellido": "Castillo",
-      "matricula": "ABC123"
+      "matricula": "BC34981"
     },
     {
       "nombre": "Ricardo",
       "apellido": "Rocha",
-      "matricula": "ABC123"
+      "matricula": "RR09812"
     },
     {
       "nombre": "Emiliano",
       "apellido": "Rodriguez",
-      "matricula": "ABC123"
+      "matricula": "ER42069"
     },
     {
       "nombre": "Luis Enrique",
       "apellido": "Martinez Galvan",
-      "matricula": "ABC123"
+      "matricula": "LM56789"
     },
     {
       "nombre": "Enrique",
       "apellido": "Santillan",
-      "matricula": "ABC123"
+      "matricula": "ES34672"
     },
     {
       "nombre": "Juan Antonio",
       "apellido": "Torres Lozano",
-      "matricula": "ABC123"
+      "matricula": "JT09124"
     }
   ];
 
