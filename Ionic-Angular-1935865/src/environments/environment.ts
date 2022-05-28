@@ -4,9 +4,10 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 export const environment = {
-  production: false, 
 
- firebaseConfig: {
+  production: true, 
+
+  firebaseConfig: {
     apiKey: "AIzaSyAQumGGMiJfz3Wufr-8gh8TZqjuxOXSGUU",
     authDomain: "bd-lab-appsmoviles.firebaseapp.com",
     databaseURL: "https://bd-lab-appsmoviles-default-rtdb.firebaseio.com",
@@ -18,6 +19,8 @@ export const environment = {
   }
   
 };
+
+const app = initializeApp(environment.firebaseConfig)
 
 /*
  * For easier debugging in development mode, you can import the following file

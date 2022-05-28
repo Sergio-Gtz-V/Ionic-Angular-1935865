@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { Location, registerLocaleData } from '@angular/common';
+import { getDatabase, onValue, ref, remove } from 'firebase/database';
+import { Database } from '@angular/fire/database';
 
 @Component({
   selector: 'app-alumno-detalle',
@@ -14,64 +18,26 @@ export class AlumnoDetalleComponent implements OnInit {
     public actionSheetC: ActionSheetController
   ) {}
 
+  alumnoslista: any =[];
+  alumnoDetalle: any = {};
+  matricula: string = this.ruta.snapshot.params.id;
+
   ngOnInit() {
-    this.obtenerDetalleAlumno(this.matricula)
+    const db = getDatabase();
+    const auxdetalle = ref(db ,'alumnos/' + this.matricula);
+    onValue(auxdetalle, (aux)=>{
+      this.alumnoDetalle = aux.val();
+    });
   }
 
-  alumnos = [
-    {
-      "nombre": "Diego",
-      "apellido": "Jasso",
-      "matricula" : "123ABC"
-    },
-    {
-     "nombre": "Sergio",
-     "apellido": "Gutierrez",
-     "matricula" : "asdadas"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Tamez",
-     "matricula" : "fgddsfafd"
-   },
-   {
-     "nombre": "Abraham",
-     "apellido": "Moreno",
-     "matricula" : "45fdfsfd"
-   },
-   {
-     "nombre": "Aylin",
-     "apellido": "Demetci",
-     "matricula" : "asfdsdf2"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Martinez",
-     "matricula" : "1sdfsff"
-   },
-   {
-     "nombre": "Manuel",
-     "apellido": "Juarez",
-     "matricula" : "123456"
-   },
-   ];
-
-   alumnoDetalle:any = {};
-   matricula: string = this.ruta.snapshot.params.id;
-
-   obtenerDetalleAlumno(matricula: string):any{
-      console.log(matricula);
-
-      for(let i = 0; i < this.alumnos.length;i++){
-        if(matricula == this.alumnos[i].matricula){
-          this.alumnoDetalle=this.alumnos[i];
-        }
-      }
-      return this.alumnoDetalle;
-   }
+  deleteAlum(): any{
+    const db = getDatabase();
+    remove(ref(db, 'alumnos/' + this.matricula))
+    window.history.back();window.location.reload();
+    }
 
    async mostrarActionSheet(){
-     const actionSheet = await this.actionSheetC.create({
+    const actionSheet = await this.actionSheetC.create({
       header: 'Opciones',
       cssClass: 'mi-primer-action-sheet',
       buttons: [{
@@ -83,6 +49,7 @@ export class AlumnoDetalleComponent implements OnInit {
           type: 'delete'
         },
         handler: () => {
+          this.deleteAlum();
           console.log('Delete clicked');
         }
       }, {
@@ -91,13 +58,6 @@ export class AlumnoDetalleComponent implements OnInit {
         data: 10,
         handler: () => {
           console.log('Share clicked');
-        }
-      }, {
-        text: 'Play (open modal)',
-        icon: 'caret-forward-circle',
-        data: 'Data value',
-        handler: () => {
-          console.log('Play clicked');
         }
       }, {
         text: 'Favorite',
@@ -113,13 +73,10 @@ export class AlumnoDetalleComponent implements OnInit {
           console.log('Cancel clicked');
         }
       }]
+    });
+    await actionSheet.present();
 
-     });
-
-     await actionSheet.present();
-
-     const {role, data} = await actionSheet.onDidDismiss();
-     console.log('onDidDismiss resolved with role and data', role, data);
-   }
-
+    const { role, data } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role and data', role, data);
+  }
 }

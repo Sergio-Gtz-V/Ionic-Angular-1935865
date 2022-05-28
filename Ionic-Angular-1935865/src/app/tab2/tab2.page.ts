@@ -1,118 +1,61 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Input } from '@angular/core';
+import { getDatabase, onValue, ref, remove, set, update } from 'firebase/database';
+
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit{
 
   constructor() {}
-  
-  //Alumnos
-alumnos = [
-  {
-    "nombre": "Abraham",
-    "apellido": "Ramirez",
-    "matricula": "fdgfgfd",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Aylin",
-    "apellido": "Demecti",
-    "matricula": "ABhgfhC123",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Brian",
-    "apellido": "Esquivel",
-    "matricula": "sadasds",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Diego",
-    "apellido": "Davila",
-    "matricula": "dsadsadsad",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Diego",
-    "apellido": "Jasso",
-    "matricula": "ABC1dsadsa23",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Julio",
-    "apellido": "Luevano",
-    "matricula": "dsadsadsdsd",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Luis Armando",
-    "apellido": "Villanueva",
-    "matricula": "dsdsadsadsada344",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Luis Otoniel",
-    "apellido": "Tamez",
-    "matricula": "fdsfdsf3",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Rogel Axel",
-    "apellido": "Guel",
-    "matricula": "dsfdsf546",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Sergio",
-    "apellido": "Gutierrez",
-    "matricula": "fdsfds3",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Omar",
-    "apellido": "Garza",
-    "matricula": "dsfdsfdsf343",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Bryan",
-    "apellido": "Castillo",
-    "matricula": "dsfdsf3434",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Ricardo",
-    "apellido": "Rocha",
-    "matricula": "fsdfdsf435",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Emiliano",
-    "apellido": "Rodriguez",
-    "matricula": "fdsfds4543",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Luis Enrique",
-    "apellido": "Martinez Galvan",
-    "matricula": "fsdf2",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Enrique",
-    "apellido": "Santillan",
-    "matricula": "gfdg54354",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  },
-  {
-    "nombre": "Juan Antonio",
-    "apellido": "Torres Lozano",
-    "matricula": "fdsfds5435",
-    "imagen": "assets/imagenes/logo-fcfm.jpeg"
-  }
-];
 
+  ngOnInit(): void {
+    const db = getDatabase();
+    const auxalumno = ref(db, 'alumnos/');
+    onValue(auxalumno, (aux) => {
+      this.alumnoslista = aux.val();
+      this.alumnoslista = Object.values(this.alumnoslista);
+    });
+  }
+
+  indice: any = {};
+  alumnoslista: any = [];
+  estado: boolean = false;
+
+
+  
+  deleteAlum(num: any): any{
+    const db = getDatabase();
+    remove(ref(db, 'alumnos/' + num.matricula))
+    window.history.back();window.location.reload();
+  }
+
+    @Input() nombre: string ="";
+    @Input() apellidos: string ="";
+
+    editarAlumno(num: any){
+      this.estado = !this.estado;
+      this.indice=num;
+    }
+
+    guardarAlum(): any{
+      const db = getDatabase();
+      update(ref(db, 'alumnos/'+ this.indice.matricula),{
+        "nombre": this.nombre,
+       "apellido": this.apellidos,
+        "matricula": this.indice.matricula
+        });
+      window.location.reload();
+      this.clear();
+    }
+
+    clear(): void{
+      this.nombre="";
+      this.apellidos="";
+      this.estado=false;
+      this.indice='';
+    }
 }
